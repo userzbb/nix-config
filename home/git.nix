@@ -8,12 +8,12 @@
       };
       init.defaultBranch = "main";
       pull.rebase = false;
-    };
-    aliases = {
-      st = "status";
-      co = "checkout";
-      br = "branch";
-      ci = "commit";
+      alias = {
+        st = "status";
+        co = "checkout";
+        br = "branch";
+        ci = "commit";
+      };
     };
   };
 }
