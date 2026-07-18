@@ -23,7 +23,7 @@
 ├── dev/                      # 开发工具链
 │   ├── default.nix
 │   ├── languages/            # 编程语言
-│   ├── containers/           # 容器引擎
+│   ├── containers/           # 容器引擎（Podman / Docker / lazydocker）
 │   └── remote/               # VS Code Server
 ├── writing/                  # 学术写作
 │   ├── default.nix
@@ -93,7 +93,7 @@ AI 自动操作手册（供 AI 助手如 Claude Code 等使用）
 
 - **系统基础工具**：直接编辑 `base/packages.nix`，在 `environment.systemPackages` 中添加包名。
 - **开发语言**：创建 `dev/languages/语言名.nix`，内容形如 `{ pkgs, ... }: { environment.systemPackages = with pkgs; [ 包1 包2 ]; }`，然后在 `dev/default.nix` 的 `imports` 中加入 `./languages/语言名.nix`。
-- **容器引擎**：类似，放在 `dev/containers/` 下。
+- **容器引擎**：类似，放在 `dev/containers/` 下。Docker、Podman、lazydocker 这类工具都放这里。
 - **写作工具**：创建 `writing/工具名.nix`，在 `writing/default.nix` 中导入。
 - **AI 工具**：创建 `ai/工具名.nix`，在 `ai/default.nix` 中导入。
 - **系统服务**：创建 `host-services/服务名.nix`，在对应主机 `hosts/nixos/configuration.nix` 的 `imports` 中添加 `../../host-services/服务名.nix`。

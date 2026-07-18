@@ -2,7 +2,7 @@
   users.users."zizimiku" = {
     isNormalUser = true;
     shell = pkgs.zsh; 
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+HH2lnW9jhK8sA+EDWl9ksTu+ERvXl1f7zYFici7VM zizimiku@outlook.com"
     ];
