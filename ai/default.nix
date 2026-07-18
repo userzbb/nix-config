@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ./claude-code.nix
-    ./cc-switch-cli.nix
+    # ./claude-code.nix
+    # ./cc-switch-cli.nix
   ];
 }
