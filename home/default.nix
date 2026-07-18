@@ -4,6 +4,7 @@
     ./git.nix
     ./vim.nix
     ./yazi.nix
-    ./nixpkgs-config.nix 
+    ./nixpkgs-config.nix
+    ./nvm.nix
   ];
 }

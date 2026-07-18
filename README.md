@@ -29,8 +29,7 @@
 │   │   ├── c-cpp.nix         # GCC / Clang / CMake / GDB
 │   │   ├── python.nix        # Python / pip / uv / pipx
 │   │   ├── rust.nix          # cargo / rustc / rust-analyzer
-│   │   ├── nodejs.nix        # Node.js / bun / pnpm / yarn
-│   │   ├── nvm.nix           # nvm（Node 版本管理，home-manager）
+│   │   ├── nodejs.nix        # Node.js / bun / pnpm / yarn（home-manager）
 │   │   ├── go.nix            # Go / gopls
 │   │   └── java.nix          # JDK 21 / Maven / Gradle
 │   ├── containers/           # 容器引擎
@@ -50,6 +49,7 @@
 │   ├── git.nix               # git 用户配置
 │   ├── vim.nix               # vim 全部配置 + 自动 symlink 给 root
 │   ├── yazi.nix              # yazi 全部配置 + 自动 symlink 给 root
+│   ├── nvm.nix               # nvm（Node 版本管理 + Node 22 LTS）
 │   └── nixpkgs-config.nix
 └── hosts/                    # 多主机定义
     ├── nixos/                # 当前主机
