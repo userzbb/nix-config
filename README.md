@@ -10,19 +10,29 @@
 ~/nix-config/
 ├── flake.nix                 # 入口：定义输入与主机
 ├── .gitignore
-├── base/                     # 系统地基（包 + 内核，不含用户配置）
+├── base/                     # 系统地基
 │   ├── default.nix           # 聚合 base 模块
 │   ├── system.nix            # 内核、网络、时区、Nix 配置
 │   ├── users.nix             # 用户、sudo、默认 shell
-│   ├── packages.nix          # 系统级包（所有用户可用）
-│   └── proxy.nix             # 代理（可选）
+│   ├── packages.nix          # 系统级基础包
+│   ├── proxy.nix             # 全局代理 + nix-daemon 代理
+│   └── ld.nix                # nix-ld 兼容层（运行预编译二进制）
 ├── host-services/            # 宿主机服务
 │   ├── default.nix
-│   ├── ssh.nix
-│   └── cockpit.nix
+│   ├── ssh.nix               # OpenSSH
+│   ├── cockpit.nix           # Cockpit Web 管理面板
+│   └── samba.nix             # Samba 文件共享
 ├── dev/                      # 开发工具链
 │   ├── default.nix
-│   ├── languages/default.nix  # Python / Rust 等语言工具
+│   ├── languages/            # 语言工具链
+│   │   ├── default.nix
+│   │   ├── c-cpp.nix         # GCC / Clang / CMake / GDB
+│   │   ├── python.nix        # Python / pip / uv / pipx
+│   │   ├── rust.nix          # cargo / rustc / rust-analyzer
+│   │   ├── nodejs.nix        # Node.js / bun / pnpm / yarn
+│   │   ├── nvm.nix           # nvm（Node 版本管理，home-manager）
+│   │   ├── go.nix            # Go / gopls
+│   │   └── java.nix          # JDK 21 / Maven / Gradle
 │   ├── containers/           # 容器引擎
 │   │   ├── default.nix
 │   │   ├── podman.nix        # Podman + lazyjournal + podman-compose
@@ -36,7 +46,7 @@
 │   └── cc-switch-cli.nix
 ├── home/                     # 用户环境 (Home Manager) — 唯一配置来源
 │   ├── default.nix
-│   ├── shell.nix             # zsh + oh-my-zsh + 别名 + y() 函数
+│   ├── shell.nix             # zsh + oh-my-zsh + 别名 + y() + 代理变量
 │   ├── git.nix               # git 用户配置
 │   ├── vim.nix               # vim 全部配置 + 自动 symlink 给 root
 │   ├── yazi.nix              # yazi 全部配置 + 自动 symlink 给 root

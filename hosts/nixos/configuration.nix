@@ -12,7 +12,10 @@
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit (inputs) catppuccin-yazi catppuccin-yazi-themes; };
       home-manager.users.zizimiku = {
-        imports = [ ../../home/default.nix ];
+        imports = [
+          ../../home/default.nix
+          ../../dev/languages/nvm.nix
+        ];
         home.stateVersion = "26.05";
       };
     }

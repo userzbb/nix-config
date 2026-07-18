@@ -1,9 +1,10 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    python3
-    python3Packages.pip
-    cargo
-    rust-analyzer
-    rustc
+{ ... }: {
+  imports = [
+    ./c-cpp.nix
+    ./python.nix
+    ./rust.nix
+    ./nodejs.nix
+    ./go.nix
+    ./java.nix
   ];
 }
