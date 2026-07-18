@@ -17,7 +17,7 @@ home.sessionVariables = {
     shellAliases = {
       ll = "ls -l";
       la = "ls -a";
-      update = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
+      update = "flake update && sudo nixos-rebuild switch --flake .#nixos";
     };
     initContent = ''
       function y() {
