@@ -82,12 +82,4 @@
       desc = "Quit yazi"
     '';
   };
-
-  # 为 root 创建软链接，共享同一份 yazi 配置
-  home.activation.linkYaziForRoot = ''
-    if [ "$USER" = "zizimiku" ]; then
-      $DRY_RUN_CMD sudo mkdir -p /root/.config
-      $DRY_RUN_CMD sudo ln -sfn /home/zizimiku/.config/yazi /root/.config/yazi
-    fi
-  '';
 }

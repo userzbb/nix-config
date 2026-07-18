@@ -43,5 +43,19 @@
     }
   '';
 
+  # 将 zizimiku 的配置软链接给其他用户（如 root）
+  # 用 systemd oneshot 确保在 home-manager 激活之后执行
+  systemd.services.link-root-configs = {
+    description = "Link root configs from zizimiku";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "home-manager-zizimiku.service" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      mkdir -p /root /root/.config
+      ln -sf /home/zizimiku/.vimrc /root/.vimrc
+      ln -sfn /home/zizimiku/.config/yazi /root/.config/yazi
+    '';
+  };
+
   system.stateVersion = "26.05";
 }

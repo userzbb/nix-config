@@ -34,12 +34,4 @@
       set undodir=~/.vim/undo
     '';
   };
-
-  # 为 root 创建软链接，共享同一份 vim 配置
-  home.activation.linkVimForRoot = ''
-    if [ "$USER" = "zizimiku" ]; then
-      $DRY_RUN_CMD sudo mkdir -p /root
-      $DRY_RUN_CMD sudo ln -sf /home/zizimiku/.vimrc /root/.vimrc
-    fi
-  '';
 }
