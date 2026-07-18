@@ -14,6 +14,10 @@
       url = "github:yazi-rs/flavors";
       flake = false;
     };
+    catppuccin-yazi-themes = {
+      url = "github:catppuccin/yazi";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, vscode-server, ... }@inputs: {
