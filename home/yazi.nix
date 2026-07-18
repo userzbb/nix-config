@@ -1,5 +1,8 @@
-{ ... }: {
+{ catppuccin-yazi, ... }: {
   xdg.configFile = {
+    # catppuccin-mocha 主题 flavor
+    "yazi/flavors/catppuccin-mocha.yazi".source = "${catppuccin-yazi}/catppuccin-mocha.yazi";
+
     "yazi/yazi.toml".text = ''
       [manager]
       show_hidden = true
@@ -20,51 +23,21 @@
 
       [open]
       prepend_rules = [
-        { name = "*.md", use = "edit" },
-        { name = "*.nix", use = "edit" },
-        { name = "*.toml", use = "edit" },
-        { name = "*.json", use = "edit" },
+        { name = "*.md", mime = "text/*", use = "edit" },
+        { name = "*.nix", mime = "text/*", use = "edit" },
+        { name = "*.toml", mime = "text/*", use = "edit" },
+        { name = "*.json", mime = "text/*", use = "edit" },
       ]
 
       [tasks]
       shell_mark = { yellow = true, bold = true }
     '';
+
     "yazi/theme.toml".text = ''
-      [status]
-      separator_open = ""
-      separator_close = ""
-
-      [[status.mode]]
-      name = "normal"
-      bg = "#89b4fa"
-      fg = "#1e1e2e"
-      bold = true
-
-      [[status.mode]]
-      name = "select"
-      bg = "#f9e2af"
-      fg = "#1e1e2e"
-      bold = true
-
-      [[status.mode]]
-      name = "unset"
-      bg = "#a6adc8"
-      fg = "#1e1e2e"
-      bold = true
-
-      [filetype]
-      rules = [
-        { mime = "image/*", fg = "#89b4fa" },
-        { mime = "video/*", fg = "#f9e2af" },
-        { mime = "audio/*", fg = "#a6e3a1" },
-        { name = "*.md", fg = "#cba6f7" },
-        { name = "*.nix", fg = "#89b4fa" },
-        { name = "*.toml", fg = "#fab387" },
-        { name = "*.json", fg = "#f9e2af" },
-        { name = "*.rs", fg = "#fab387" },
-        { name = "*.py", fg = "#a6e3a1" },
-      ]
+      [flavor]
+      use = "catppuccin-mocha"
     '';
+
     "yazi/keymap.toml".text = ''
       [[manager.prepend_keymap]]
       on = [ "g", "d" ]
