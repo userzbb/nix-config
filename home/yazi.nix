@@ -34,22 +34,5 @@
       [flavor]
       use = "catppuccin-mocha"
     '';
-
-    "yazi/keymap.toml".text = ''
-      [[manager.prepend_keymap]]
-      on = [ "g", "d" ]
-      run = "cd ~/nix-config"
-      desc = "Go to nix-config"
-
-      [[manager.prepend_keymap]]
-      on = [ "g", "h" ]
-      run = "cd ~"
-      desc = "Go home"
-
-      [[manager.prepend_keymap]]
-      on = [ "Z" ]
-      run = "quit"
-      desc = "Quit yazi"
-    '';
   };
 }
