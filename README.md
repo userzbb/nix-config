@@ -22,13 +22,19 @@
 │   └── samba.nix
 ├── dev/                      # 开发工具链
 │   ├── default.nix
-│   ├── languages/default.nix  # Python / Rust 等语言工具
-│   ├── containers/default.nix # Podman / Docker / lazydocker
+│   ├── languages/default.nix  # Python / Rust 等语言工具（纯包收拢）
+│   ├── containers/           # 容器引擎（有配置，拆开）
+│   │   ├── default.nix
+│   │   ├── podman.nix
+│   │   ├── docker.nix
+│   │   └── lazydocker.nix
 │   └── remote/               # VS Code Server
 ├── writing/                  # 学术写作
-│   └── default.nix           # pandoc / typst / texliveFull / zotero
+│   └── default.nix           # pandoc / typst / texliveFull / zotero（纯包收拢）
 ├── ai/                       # AI 助手
-│   └── default.nix           # claude-code / cc-switch-cli
+│   ├── default.nix
+│   ├── claude-code.nix       # claude-code 包
+│   └── cc-switch-cli.nix     # cc-switch-cli 包装脚本（有逻辑）
 ├── home/                     # 用户环境 (Home Manager)
 │   ├── default.nix
 │   ├── shell.nix
