@@ -22,19 +22,13 @@
 │   └── samba.nix
 ├── dev/                      # 开发工具链
 │   ├── default.nix
-│   ├── languages/            # 编程语言
-│   ├── containers/           # 容器引擎（Podman / Docker / lazydocker）
+│   ├── languages/default.nix  # Python / Rust 等语言工具
+│   ├── containers/default.nix # Podman / Docker / lazydocker
 │   └── remote/               # VS Code Server
 ├── writing/                  # 学术写作
-│   ├── default.nix
-│   ├── texlive.nix
-│   ├── typst.nix
-│   ├── pandoc.nix
-│   └── zotero.nix
+│   └── default.nix           # pandoc / typst / texliveFull / zotero
 ├── ai/                       # AI 助手
-│   ├── default.nix
-│   ├── claude-code.nix
-│   └── cc-switch-cli.nix
+│   └── default.nix           # claude-code / cc-switch-cli
 ├── home/                     # 用户环境 (Home Manager)
 │   ├── default.nix
 │   ├── shell.nix
@@ -70,6 +64,12 @@
 | 清理旧版本 | `nix-collect-garbage -d` |
 | 仅重建用户环境 | `home-manager switch --flake .#zizimiku` |
 
+## 设计原则
+
+- 纯包优先收拢到对应功能目录的 `default.nix`，只有带明显配置逻辑（如服务开关、用户组、环境变量）的内容才单独拆文件。
+- `base/` 放系统基础能力，`dev/` 放开发工具链，`writing/` 放写作工具，`ai/` 放 AI 工具，`home/` 放用户环境。
+- 一个功能域内的软件包尽量放在同一个文件里，不做"一个包一个文件"的过细拆分。
+
 ## 注意
 
 - 硬件配置 (`hardware-configuration.nix`) 已纳入版本控制，换机时请重新生成。
@@ -82,7 +82,7 @@ AI 自动操作手册（供 AI 助手如 Claude Code 等使用）
 
 ## 核心规则
 
-- 系统级软件包（需 root）放入 `base/packages.nix` 的 `environment.systemPackages` 列表，或按功能域新建文件（如 `dev/languages/xxx.nix`）。
+- 系统级软件包（需 root）放入 `base/packages.nix` 的 `environment.systemPackages` 列表，或按功能域直接收拢到对应目录的 `default.nix`（如 `writing/default.nix`、`ai/default.nix`）。
 - 系统服务放入 `host-services/`，一个服务一个文件。
 - 用户级配置（Home Manager）放入 `home/`，一个应用一个文件。
 - 通过各目录的 `default.nix` 聚合导入，或由主机 `configuration.nix` 直接导入。
@@ -92,10 +92,10 @@ AI 自动操作手册（供 AI 助手如 Claude Code 等使用）
 ## 文件放置与编辑指南
 
 - **系统基础工具**：直接编辑 `base/packages.nix`，在 `environment.systemPackages` 中添加包名。
-- **开发语言**：创建 `dev/languages/语言名.nix`，内容形如 `{ pkgs, ... }: { environment.systemPackages = with pkgs; [ 包1 包2 ]; }`，然后在 `dev/default.nix` 的 `imports` 中加入 `./languages/语言名.nix`。
-- **容器引擎**：类似，放在 `dev/containers/` 下。Docker、Podman、lazydocker 这类工具都放这里。
-- **写作工具**：创建 `writing/工具名.nix`，在 `writing/default.nix` 中导入。
-- **AI 工具**：创建 `ai/工具名.nix`，在 `ai/default.nix` 中导入。
+- **开发语言**：优先收拢到 `dev/languages/default.nix`，直接往 `environment.systemPackages` 追加包名即可。只有配置复杂（如多个版本、自定义环境）时才拆分单独文件。
+- **容器引擎**：优先收拢到 `dev/containers/default.nix`，把 Docker、Podman、lazydocker 一起放在同一个模块里管理。
+- **写作工具**：优先直接放进 `writing/default.nix`，只有真正有独立配置逻辑时才拆单文件。
+- **AI 工具**：优先直接放进 `ai/default.nix`，只有真正有独立逻辑时才拆单文件。
 - **系统服务**：创建 `host-services/服务名.nix`，在对应主机 `hosts/nixos/configuration.nix` 的 `imports` 中添加 `../../host-services/服务名.nix`。
 - **用户应用配置**：创建 `home/应用名.nix`，使用 Home Manager 选项（如 `programs.tmux.enable = true`），然后在 `home/default.nix` 的 `imports` 中添加 `./应用名.nix`。
 - **删除软件**：在相应的 `default.nix` 中注释或移除对应导入行，可选删除源文件。

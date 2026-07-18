@@ -1,8 +1,8 @@
-{ ... }: {
-  imports = [
-    ./pandoc.nix
-    ./typst.nix
-    ./texlive.nix
-    ./zotero.nix
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [
+    pandoc
+    typst
+    texliveFull
+    zotero
   ];
 }

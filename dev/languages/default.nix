@@ -1,6 +1,9 @@
-{ ... }: {
-  imports = [
-    ./python.nix
-    ./rust.nix
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [
+    python3
+    python3Packages.pip
+    cargo
+    rust-analyzer
+    rustc
   ];
 }
