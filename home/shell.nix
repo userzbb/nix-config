@@ -1,5 +1,8 @@
-{ ... }: {
-
+{ config, ... }:
+let
+  githubToken = builtins.readFile "${config.home.homeDirectory}/.config/github/token";
+in
+{
   home.sessionVariables = {
     EDITOR = "vim";
     VISUAL = "vim";
@@ -7,6 +10,7 @@
     https_proxy = "http://192.168.159.1:7897";
     all_proxy = "socks5://192.168.159.1:7897";
     no_proxy = "localhost,127.0.0.1,192.168.0.0/16,10.0.0.0/8,*.local";
+    GITHUB_TOKEN = githubToken;
   };
 
   programs.zsh = {
@@ -21,7 +25,7 @@
     shellAliases = {
       ll = "ls -l";
       la = "ls -a";
-      update = "nix flake update && sudo nixos-rebuild switch --flake .#nixos";
+      update = "nix flake update && sudo nixos-rebuild switch --impure --flake .#nixos";
     };
     initContent = ''
       nix-shell() {
