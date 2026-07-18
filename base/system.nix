@@ -35,6 +35,10 @@
   programs.zsh.interactiveShellInit = ''
     function y() {
       local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+      if [ ! -e "$HOME/.config/yazi" ] && [ -d /etc/yazi ]; then
+        mkdir -p "$HOME/.config"
+        ln -sf /etc/yazi "$HOME/.config/yazi"
+      fi
       yazi "$@" --cwd-file="$tmp"
       if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
         builtin cd -- "$cwd"

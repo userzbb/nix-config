@@ -8,7 +8,6 @@
     file
     tree
     unzip
-    yazi
     fastfetch
   ];
 }
