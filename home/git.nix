@@ -1,7 +1,13 @@
 { config, pkgs, ... }: {
   programs.git = {
     enable = true;
-    userName = "zizimiku";
-    userEmail = "zizimiku@outlook.com";
+    settings = {
+      user = {
+        name = "zizimiku";
+        email = "zizimiku@outlook.com";
+      };
+      init.defaultBranch = "main";
+      pull.rebase = false;
+    };
   };
 }
