@@ -1,6 +1,6 @@
-{ config, ... }:
+{ ... }:
 let
-  githubToken = builtins.readFile "${config.home.homeDirectory}/.config/github/token";
+  githubToken = import ./token.nix;
 in
 {
   home.sessionVariables = {

@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  githubToken = import ../home/token.nix;
+in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.networkmanager.enable = true;
   time.timeZone = "Asia/Shanghai";
@@ -29,6 +32,7 @@
 
   # 启用 nix-command 和 flakes（让 nix shell、nix run 等命令正常工作）
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.access-tokens = "github.com=${githubToken}";  # GitHub API 认证，解决 rate limit
 
   # 全局 Zsh
   programs.zsh.enable = true;
