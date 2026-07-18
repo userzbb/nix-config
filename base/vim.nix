@@ -29,12 +29,5 @@
     set undolevels=1000
     set undofile
     set undodir=~/.vim/undo
-
-    " === 快捷键 ===
-    let mapleader = " "
-    nnoremap <leader>w :w<CR>
-    nnoremap <leader>q :q<CR>
-    nnoremap <leader>n :nohlsearch<CR>
-    nnoremap <leader>e :Explore<CR>
   '';
 }
