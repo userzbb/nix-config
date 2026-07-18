@@ -23,10 +23,7 @@
 
       [open]
       prepend_rules = [
-        { name = "*.md", mime = "text/*", use = "edit" },
-        { name = "*.nix", mime = "text/*", use = "edit" },
-        { name = "*.toml", mime = "text/*", use = "edit" },
-        { name = "*.json", mime = "text/*", use = "edit" },
+        { mime = "text/*", use = "edit" },
       ]
 
       [tasks]
