@@ -12,23 +12,21 @@
 ├── .gitignore
 ├── base/                     # 系统地基（包 + 内核，不含用户配置）
 │   ├── default.nix           # 聚合 base 模块
-│   ├── system.nix            # 内核、网络、时区、全局 Zsh + y() 函数
+│   ├── system.nix            # 内核、网络、时区、Nix 配置
 │   ├── users.nix             # 用户、sudo、默认 shell
 │   ├── packages.nix          # 系统级包（所有用户可用）
 │   └── proxy.nix             # 代理（可选）
 ├── host-services/            # 宿主机服务
 │   ├── default.nix
 │   ├── ssh.nix
-│   ├── cockpit.nix
-│   └── samba.nix
+│   └── cockpit.nix
 ├── dev/                      # 开发工具链
 │   ├── default.nix
 │   ├── languages/default.nix  # Python / Rust 等语言工具
 │   ├── containers/           # 容器引擎
 │   │   ├── default.nix
-│   │   ├── podman.nix
-│   │   ├── docker.nix
-│   │   └── lazydocker.nix
+│   │   ├── podman.nix        # Podman + lazyjournal + podman-compose
+│   │   └── docker.nix        # Docker + docker-compose + lazydocker
 │   └── remote/               # VS Code Server
 ├── writing/                  # 学术写作
 │   └── default.nix           # pandoc / typst / texliveFull / zotero
@@ -38,7 +36,7 @@
 │   └── cc-switch-cli.nix
 ├── home/                     # 用户环境 (Home Manager) — 唯一配置来源
 │   ├── default.nix
-│   ├── shell.nix             # zsh + oh-my-zsh + 别名
+│   ├── shell.nix             # zsh + oh-my-zsh + 别名 + y() 函数
 │   ├── git.nix               # git 用户配置
 │   ├── vim.nix               # vim 全部配置 + 自动 symlink 给 root
 │   ├── yazi.nix              # yazi 全部配置 + 自动 symlink 给 root
@@ -76,7 +74,7 @@
 
 - **`home/` 是唯一配置来源**——所有应用配置（vim、yazi、zsh、git）都在 `home/`，不在 `base/` 重复。
 - **`base/` 只管系统和包**——内核、网络、用户、系统级包，不含用户配置内容。
-- **其他用户通过软链接共享**——root 等用户的配置由 `home.activation` 自动 `ln -sf` 到 zizimiku 的配置目录。
+- **其他用户通过 systemd oneshot 共享**——root 等用户的配置由 `systemd.services.link-root-configs` 自动 `ln -sf` 到 zizimiku 的配置目录。
 - 一个功能域内的软件包尽量放在同一个文件里，不做"一个包一个文件"的过细拆分。
 
 ## 注意
