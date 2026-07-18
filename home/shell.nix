@@ -20,7 +20,13 @@ home.sessionVariables = {
       update = "sudo nixos-rebuild switch --flake ~/nix-config#nixos";
     };
     initContent = ''
-
+      function y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        command yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d '' cwd < "$tmp"
+        [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+        command rm -f -- "$tmp"
+      }
     '';
   };
 }

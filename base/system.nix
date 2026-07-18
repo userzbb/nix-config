@@ -30,18 +30,8 @@
   # 启用 nix-command 和 flakes（让 nix shell、nix run 等命令正常工作）
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # 全局 Zsh + yazi 快捷函数
+  # 全局 Zsh
   programs.zsh.enable = true;
-  programs.zsh.interactiveShellInit = ''
-    function y() {
-      local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-      yazi "$@" --cwd-file="$tmp"
-      if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-      fi
-      rm -f -- "$tmp"
-    }
-  '';
 
   # 将 zizimiku 的配置软链接给其他用户（如 root）
   # 用 systemd oneshot 确保在 home-manager 激活之后执行
