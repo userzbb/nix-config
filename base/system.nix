@@ -27,6 +27,9 @@
     "mirrors.ustc.edu.cn-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
   ];
 
+  # 启用 nix-command 和 flakes（让 nix shell、nix run 等命令正常工作）
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # 全局 Zsh 支持 + yazi 快捷函数
   programs.zsh.enable = true;
   programs.zsh.interactiveShellInit = ''
