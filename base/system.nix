@@ -30,15 +30,11 @@
   # 启用 nix-command 和 flakes（让 nix shell、nix run 等命令正常工作）
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # 全局 Zsh 支持 + yazi 快捷函数
+  # 全局 Zsh + yazi 快捷函数
   programs.zsh.enable = true;
   programs.zsh.interactiveShellInit = ''
     function y() {
       local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-      if [ ! -e "$HOME/.config/yazi" ] && [ -d /etc/yazi ]; then
-        mkdir -p "$HOME/.config"
-        ln -sf /etc/yazi "$HOME/.config/yazi"
-      fi
       yazi "$@" --cwd-file="$tmp"
       if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
         builtin cd -- "$cwd"

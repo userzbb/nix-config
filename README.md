@@ -10,43 +10,45 @@
 ~/nix-config/
 ├── flake.nix                 # 入口：定义输入与主机
 ├── .gitignore
-├── base/                     # 系统地基
+├── base/                     # 系统地基（包 + 内核，不含用户配置）
 │   ├── default.nix           # 聚合 base 模块
-│   ├── system.nix            # 内核、网络、时区、全局 Zsh + yazi 函数
+│   ├── system.nix            # 内核、网络、时区、全局 Zsh + y() 函数
 │   ├── users.nix             # 用户、sudo、默认 shell
-│   ├── packages.nix          # 系统级基础包（vim, git, yazi 等）
-│   └── proxy.nix             # 代理开关（可选）
+│   ├── packages.nix          # 系统级包（所有用户可用）
+│   └── proxy.nix             # 代理（可选）
 ├── host-services/            # 宿主机服务
+│   ├── default.nix
 │   ├── ssh.nix
 │   ├── cockpit.nix
 │   └── samba.nix
 ├── dev/                      # 开发工具链
 │   ├── default.nix
-│   ├── languages/default.nix  # Python / Rust 等语言工具（纯包收拢）
-│   ├── containers/           # 容器引擎（有配置，拆开）
+│   ├── languages/default.nix  # Python / Rust 等语言工具
+│   ├── containers/           # 容器引擎
 │   │   ├── default.nix
 │   │   ├── podman.nix
 │   │   ├── docker.nix
 │   │   └── lazydocker.nix
 │   └── remote/               # VS Code Server
 ├── writing/                  # 学术写作
-│   └── default.nix           # pandoc / typst / texliveFull / zotero（纯包收拢）
+│   └── default.nix           # pandoc / typst / texliveFull / zotero
 ├── ai/                       # AI 助手
 │   ├── default.nix
-│   ├── claude-code.nix       # claude-code 包
-│   └── cc-switch-cli.nix     # cc-switch-cli 包装脚本（有逻辑）
-├── home/                     # 用户环境 (Home Manager)
+│   ├── claude-code.nix
+│   └── cc-switch-cli.nix
+├── home/                     # 用户环境 (Home Manager) — 唯一配置来源
 │   ├── default.nix
-│   ├── shell.nix
-│   ├── git.nix
-│   ├── vim.nix
+│   ├── shell.nix             # zsh + oh-my-zsh + 别名
+│   ├── git.nix               # git 用户配置
+│   ├── vim.nix               # vim 全部配置 + 自动 symlink 给 root
+│   ├── yazi.nix              # yazi 全部配置 + 自动 symlink 给 root
 │   └── nixpkgs-config.nix
 └── hosts/                    # 多主机定义
     ├── nixos/                # 当前主机
     │   ├── configuration.nix
     │   └── hardware-configuration.nix
-    ├── server/               # 示例：未来服务器
-    └── laptop/               # 示例：未来笔记本
+    ├── server/               # 未来服务器
+    └── laptop/               # 未来笔记本
 ```
 
 ## 快速开始
@@ -72,8 +74,9 @@
 
 ## 设计原则
 
-- 纯包优先收拢到对应功能目录的 `default.nix`，只有带明显配置逻辑（如服务开关、用户组、环境变量）的内容才单独拆文件。
-- `base/` 放系统基础能力，`dev/` 放开发工具链，`writing/` 放写作工具，`ai/` 放 AI 工具，`home/` 放用户环境。
+- **`home/` 是唯一配置来源**——所有应用配置（vim、yazi、zsh、git）都在 `home/`，不在 `base/` 重复。
+- **`base/` 只管系统和包**——内核、网络、用户、系统级包，不含用户配置内容。
+- **其他用户通过软链接共享**——root 等用户的配置由 `home.activation` 自动 `ln -sf` 到 zizimiku 的配置目录。
 - 一个功能域内的软件包尽量放在同一个文件里，不做"一个包一个文件"的过细拆分。
 
 ## 注意
@@ -88,10 +91,10 @@ AI 自动操作手册（供 AI 助手如 Claude Code 等使用）
 
 ## 核心规则
 
-- 系统级软件包（需 root）放入 `base/packages.nix` 的 `environment.systemPackages` 列表，或按功能域直接收拢到对应目录的 `default.nix`（如 `writing/default.nix`、`ai/default.nix`）。
+- **`home/` 是唯一配置来源**——所有应用的用户配置（vim、yazi、zsh、git）都在 `home/`，不在 `base/` 重复。
+- 系统级软件包放入 `base/packages.nix`，或按功能域收拢到 `dev/`、`writing/`、`ai/` 的 `default.nix`。
 - 系统服务放入 `host-services/`，一个服务一个文件。
-- 用户级配置（Home Manager）放入 `home/`，一个应用一个文件。
-- 通过各目录的 `default.nix` 聚合导入，或由主机 `configuration.nix` 直接导入。
+- 通过各目录的 `default.nix` 聚合导入。
 - 每次文件修改后必须执行 `git add` 和 `git commit`，然后运行 `sudo nixos-rebuild switch --flake .#nixos`。
 - 禁止直接修改 `/etc/nixos/configuration.nix`。
 

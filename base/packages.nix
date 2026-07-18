@@ -9,5 +9,12 @@
     tree
     unzip
     fastfetch
+    yazi
+    ffmpegthumbnailer
+    unar
+    poppler-utils
+    fd
+    ripgrep
+    jq
   ];
 }
