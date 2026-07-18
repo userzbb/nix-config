@@ -1,6 +1,6 @@
 { ... }: {
   services.samba = {
     enable = false;
-    openFirewall = false;
+    openFirewall = true;
   };
 }
