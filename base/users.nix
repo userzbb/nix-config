@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   users.users."zizimiku" = {
     isNormalUser = true;
     shell = pkgs.zsh; 

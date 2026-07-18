@@ -1,9 +1,10 @@
-{ config, pkgs, inputs, ... }: {
+{ inputs, ... }: {
   imports = [
     ./hardware-configuration.nix   # 下一步会生成 / 复制到这里
     ../../base/default.nix
     ../../host-services/ssh.nix
-    ../../dev/remote/vscode-server.nix
+    ../../dev/default.nix
+    ../../writing/default.nix
     ../../ai/default.nix
     inputs.home-manager.nixosModules.home-manager
     {

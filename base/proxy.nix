@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ ... }: {
   # 为所有用户设置全局代理环境变量（如果你希望只为自己设，可移到 home/shell.nix）
   environment.variables = {
     http_proxy  = "http://192.168.159.1:7897";
