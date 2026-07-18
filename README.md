@@ -49,7 +49,6 @@
 │   ├── git.nix               # git 用户配置
 │   ├── vim.nix               # vim 全部配置 + 自动 symlink 给 root
 │   ├── yazi.nix              # yazi 全部配置 + 自动 symlink 给 root
-│   ├── nvm.nix               # nvm（Node 版本管理 + Node 22 LTS）
 │   └── nixpkgs-config.nix
 └── hosts/                    # 多主机定义
     ├── nixos/                # 当前主机

@@ -5,6 +5,5 @@
     ./vim.nix
     ./yazi.nix
     ./nixpkgs-config.nix
-    ./nvm.nix
   ];
 }

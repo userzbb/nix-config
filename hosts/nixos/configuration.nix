@@ -14,7 +14,6 @@
       home-manager.users.zizimiku = {
         imports = [
           ../../home/default.nix
-          ../../dev/languages/nodejs.nix
         ];
         home.stateVersion = "26.05";
       };
