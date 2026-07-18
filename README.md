@@ -86,6 +86,39 @@
 - **其他用户通过 systemd oneshot 共享**——root 等用户的配置由 `systemd.services.link-root-configs` 自动 `ln -sf` 到 zizimiku 的配置目录。
 - 一个功能域内的软件包尽量放在同一个文件里，不做"一个包一个文件"的过细拆分。
 
+## 配置检查
+
+**每次新增软件包或写新配置前，必须先确认包名/选项名存在且可用。**
+
+### 1. 搜索包名
+
+```bash
+nix search nixpkgs <关键词>
+```
+
+能搜到 = 包存在，直接用。搜不到说明包名不对或不在 nixpkgs 里。
+
+### 2. 搜索 NixOS 选项
+
+```bash
+man nixos-options 2>/dev/null || nixos-option 2>/dev/null
+```
+
+或者直接查 nixpkgs 源码里的 options 定义，确认选项名不是废弃/重命名的。
+
+### 3. 构建检查（commit 前必须通过）
+
+```bash
+nix build --no-link --impure '.#nixosConfigurations.nixos.config.system.build.toplevel'
+```
+
+- `--no-link` — 不创建 `/nix/store` 软链接，纯检查用
+- `--impure` — 允许读取 flake 源码外的文件（如 token 文件）
+- **输出 `error:` → 配置有问题，修复后再 commit**
+- **无输出或只输出 `/nix/store/...` 路径 → 检查通过 ✅**
+
+> 三步走：搜包 → 写配置 → build 检查，把问题挡在 commit 和部署之前。
+
 ## 注意
 
 - 硬件配置 (`hardware-configuration.nix`) 已纳入版本控制，换机时请重新生成。
@@ -119,16 +152,24 @@ AI 自动操作手册（供 AI 助手如 Claude Code 等使用）
 ## AI 操作标准流程
 
 1. 根据用户请求确定软件类型，选择正确的文件位置。
-2. 创建或编辑对应的 `.nix` 文件。
-3. 若需聚合，修改 `default.nix` 或主机 `configuration.nix`。
-4. 执行以下命令：
+2. **搜索确认包名/选项可用**（必须在写配置之前）：
+   ```bash
+   nix search nixpkgs <关键词>
+   ```
+3. 创建或编辑对应的 `.nix` 文件。
+4. 若需聚合，修改 `default.nix` 或主机 `configuration.nix`。
+5. **运行构建检查**（必须通过才能继续）：
+   ```bash
+   nix build --no-link --impure '.#nixosConfigurations.nixos.config.system.build.toplevel'
+   ```
+6. 执行以下命令：
    ```bash
    cd ~/nix-config
    git add .
    git commit -m "描述修改"
-   sudo nixos-rebuild switch --flake .#nixos
+   sudo nixos-rebuild switch --impure --flake .#nixos
    ```
-5. 若构建失败，分析错误输出，必要时调整并重试，或将错误反馈给用户。
+7. 若构建失败，分析错误输出，必要时调整并重试，或将错误反馈给用户。
 
 ## 注意事项
 

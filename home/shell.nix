@@ -26,6 +26,8 @@ in
       ll = "ls -l";
       la = "ls -a";
       update = "nix flake update && sudo nixos-rebuild switch --impure --flake .#nixos";
+      lzd = "lazydocker";
+      lzj = "lazyjournal";
     };
     initContent = ''
       nix-shell() {
