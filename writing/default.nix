@@ -1,6 +1,7 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    pandoc
-    typst
+{ ... }: {
+  imports = [
+    ./pandoc.nix
+    ./typst.nix
+    ./zotero.nix
   ];
 }
