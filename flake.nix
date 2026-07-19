@@ -7,9 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-    };
     cc-switch-cli = {
       url = "github:SaladDay/cc-switch-cli";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +21,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, vscode-server, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

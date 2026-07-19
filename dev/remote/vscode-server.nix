@@ -1,4 +1,3 @@
-{ inputs, ... }: {
-  imports = [ inputs.vscode-server.nixosModules.default ];
-  services.vscode-server.enable = true;
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ vscode ];
 }
