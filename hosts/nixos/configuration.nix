@@ -2,7 +2,7 @@
   imports = [
     ./hardware-configuration.nix   # 下一步会生成 / 复制到这里
     ../../base/default.nix
-    ../../host-services/default.nix
+    ../../network/default.nix
     ../../dev/default.nix
     ../../writing/default.nix
     ../../ai/default.nix

@@ -3,6 +3,6 @@
     ./system.nix
     ./users.nix
     ./packages.nix
-    ./proxy.nix 
+    ./nix-ld.nix
   ];
 }
