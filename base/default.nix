@@ -4,5 +4,6 @@
     ./users.nix
     ./packages.nix
     ./nix-ld.nix
+    ./fonts.nix
   ];
 }
