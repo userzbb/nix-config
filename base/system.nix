@@ -33,6 +33,23 @@ in {
   # 启用 nix-command 和 flakes（让 nix shell、nix run 等命令正常工作）
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.access-tokens = "github.com=${githubToken}";  # GitHub API 认证，解决 rate limit
+  nix.settings.auto-optimise-store = true;  # 自动通过硬链接优化 store，节省磁盘空间
+
+  # nix-sweep: 定期自动清理旧的 profile generations 并 GC
+  services.nix-sweep = {
+    enable = true;
+    interval = "daily";
+    keepMin = 3;
+    keepMax = 5;
+    removeOlder = "14d";
+    gc = true;
+  };
+
+  # 限制 journal 日志大小，防止 /var/log 占满磁盘
+  services.journald.extraConfig = ''
+    SystemMaxUse=200M
+    MaxRetentionSec=7d
+  '';
 
   # 全局 Zsh
   programs.zsh.enable = true;

@@ -19,14 +19,19 @@
       url = "github:catppuccin/yazi";
       flake = false;
     };
+    nix-sweep = {
+      url = "github:jzbor/nix-sweep";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nix-sweep, ... }@inputs: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          nix-sweep.nixosModules.default
           ./hosts/nixos/configuration.nix
         ];
       };
