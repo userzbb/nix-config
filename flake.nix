@@ -10,6 +10,10 @@
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
     };
+    cc-switch-cli = {
+      url = "github:SaladDay/cc-switch-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin-yazi = {
       url = "github:yazi-rs/flavors";
       flake = false;
