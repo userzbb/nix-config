@@ -6,10 +6,7 @@
       " === 外观 ===
       set number
       set relativenumber
-      set cursorline
       set showmode
-      set showcmd
-      set ruler
 
       " === 缩进 ===
       set expandtab
@@ -28,8 +25,6 @@
       " === 行为 ===
       set mouse=a
       set hidden
-      set history=1000
-      set undolevels=1000
       set undofile
       set undodir=~/.vim/undo
     '';

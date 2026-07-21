@@ -1,0 +1,5 @@
+{
+    "chat.utilityModel": "deepseek/deepseek-v4-pro",
+    "chat.byokUtilityModelDefault": "copilot",
+    "chat.utilitySmallModel": "deepseek/deepseek-v4-pro"
+}

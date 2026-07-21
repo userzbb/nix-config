@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./ssh.nix
-    ./cockpit.nix
+#    ./cockpit.nix
     ./samba.nix
     ./proxy.nix
     ./firewall.nix
